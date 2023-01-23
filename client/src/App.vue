@@ -63,10 +63,8 @@ export default {
 </script>
 
 <template>
-  <div v-if="currentPage != 'login'">
-    <Navbar />
-  </div>
-  <section v-if="currentPage == 'home'">
+  <div class="h-screen">
+    <section v-if="currentPage == 'home'">
     <Home />
   </section>
   <section v-if="currentPage == 'login'">
@@ -79,6 +77,9 @@ export default {
   <section v-if="currentPage == 'user'">
     <User />
   </section>
+  <Navbar @changePage="changePage" />
+  </div>
+  
 </template>
 
 <style>
