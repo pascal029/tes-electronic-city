@@ -15,7 +15,8 @@ export default {
   data(){
     return {
       currentPage : 'login',
-      username : ''
+      username : 'tes@eci.co.id',
+      password : 'tes123'
     }
   },
   created () {
@@ -29,6 +30,33 @@ export default {
   methods : {
     changePage(nextPage) {
       this.currentPage = nextPage
+    },
+    async login(data){
+      try {
+        let error = ''
+        if(!data.password || !data.username) {
+          error = 'Username and password are required'
+          throw error
+        }
+        if(data.username == this.username && data.password == this.password){
+          localStorage.setItem('access_token', 'ada')
+          localStorage.setItem('username', this.username)
+          Swal.fire('login success')
+          this.changePage("home")
+        } else {
+          error = 'Incorrect username or password'
+          throw error
+        }
+      } catch (error) {
+        Swal.fire({
+          position: 'center',
+          width : '15em',
+          icon: 'error',
+          title: error,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
   }
 }
@@ -42,7 +70,7 @@ export default {
     <Home />
   </section>
   <section v-if="currentPage == 'login'">
-    <Login />
+    <Login @login="login" />
   </section>
   <section v-if="currentPage == 'list'">
     <List />
